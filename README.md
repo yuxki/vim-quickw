@@ -1,1 +1,1 @@
-# vim-quick-word
+# vim-quickw
