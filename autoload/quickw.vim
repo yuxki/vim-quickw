@@ -44,7 +44,7 @@ func! s:QuickWordPkm()
   let pkm.color_normal = 'Pmenu'
   let pkm.color_visual = 'PmenuSel'
 
-  func! pkm.WordSpaces()
+  func! pkm.WordSpaces() dict
     let word_spaces = []
     let start = 0
     let keys_len = len(self.keys)
@@ -63,8 +63,84 @@ func! s:QuickWordPkm()
     return word_spaces
   endfunc
 
+  func! pkm.HorizOpts() dict
+    let line_plus = len(self.pages) < 2 ? 1 : 2
+    let options = #{
+          \ filtermode: 'n',
+          \ pos: 'botleft',
+          \ line: 'cursor+' . line_plus,
+          \ col: 'cursor-' . (virtcol('.') - 1) ,
+          \ }
+    return options
+  endfunc
+
+  func! pkm.InitHoriz() dict
+    "init
+    let self.vertical = 0
+    let self.line = getline('.')
+    let self.positions = s:WordPositions(self.line, g:quickw_word_pattern)
+    let self.mode = self.MODE_NORMAL
+
+    " init by global vars
+    let self.color_normal = g:quickw_color_normal
+    let self.color_visual = g:quickw_color_visual
+    let self.keys = g:quickw_keys
+    let self.max_cols_lines = len(g:quickw_keys)
+    let self.header = g:quickw_cover_line ? self.line : ''
+
+    call self.Load(self.WordSpaces())
+  endfunc
+
+  func! pkm.ToHorizontal(winid) dict
+    call self.InitHoriz()
+    call self.Refresh()
+    call popup_move(a:winid, self.HorizOpts())
+  endfunc
+
+  func! pkm.VertOpts() dict
+    let even_adj = 0
+
+    if len(self.keys) % 2 == 0
+      let even_adj -= 1
+    endif
+
+    let options = #{
+          \ pos: 'botleft',
+          \ line: 'cursor+'.string((len(self.keys) / 2) + even_adj),
+          \ col: 'cursor',
+          \ scrollbar: 1,
+          \ }
+    return options
+  endfunc
+
+  func! pkm.InitVert() dict
+    let self.vertical = 1
+    let self.header = ''
+
+    let lines = []
+    for key in self.keys
+      call add(lines, ' ')
+    endfor
+    call self.Load(lines)
+
+    let above_capacity = winline() - ((len(self.keys) / 2) + 1)
+    if above_capacity < 0
+      let self.pages[0] = self.pages[0][above_capacity * -1:]
+    endif
+  endfunc
+
+  func! pkm.ToVert(winid) dict
+    let self.mode = self.MODE_NORMAL
+    call setwinvar(a:winid, '&wincolor', self.color_normal)
+
+    call self.InitVert()
+    call self.Refresh()
+
+    call popup_move(a:winid, self.VertOpts())
+  endfunc
+
   " overrides
-  func! pkm.OnOpen(winid)
+  func! pkm.OnOpen(winid) dict
     call setwinvar(a:winid, '&wincolor', self.color_normal)
   endfunc
 
@@ -79,6 +155,8 @@ func! s:QuickWordPkm()
         let self.mode = self.MODE_VISUAl
         call setwinvar(a:winid, '&wincolor', self.color_visual)
       endif
+    elseif a:key ==# 'l'
+      call self.ToVert(a:winid)
     endif
 
     if len(a:key) == 1
@@ -91,15 +169,24 @@ func! s:QuickWordPkm()
   endfunc
 
   func! pkm.OnKeySelect(winid, index) dict
-    if self.mode ==# self.MODE_VISUAl
-      exe 'normal! v '
-    endif
+    if !self.vertical
+      " horizontal
+      if self.mode ==# self.MODE_VISUAl
+        exe 'normal! v '
+      endif
 
-    let pos = self.endofword == 0 ?
-          \ self.positions[a:index][1] + 1 : self.positions[a:index][2]
-    call cursor('.', pos)
-    call popup_close(a:winid)
+      let pos = self.endofword == 0 ?
+            \ self.positions[a:index][1] + 1 : self.positions[a:index][2]
+      call cursor('.', pos)
+      call popup_close(a:winid)
+    else
+      " vertical
+      let diff = ((len(self.keys) / 2) * -1) + a:index
+      call cursor(line('.') + diff, '.')
+      call self.ToHorizontal(a:winid)
+    endif
   endfunc
+
   return pkm
 endfunc
 
@@ -109,28 +196,13 @@ func! quickw#QuickWord()
     let s:qw_pkm = s:QuickWordPkm()
   endif
 
-  " init
-  let s:qw_pkm.line = getline('.')
-  let s:qw_pkm.positions = s:WordPositions(s:qw_pkm.line, g:quickw_word_pattern)
-  let s:qw_pkm.mode = s:qw_pkm.MODE_NORMAL
-
-  " init by global vars
-  let s:qw_pkm.color_normal = g:quickw_color_normal
-  let s:qw_pkm.color_visual = g:quickw_color_visual
-  let s:qw_pkm.keys = g:quickw_keys
-  let s:qw_pkm.max_cols_lines = len(g:quickw_keys)
-  let s:qw_pkm.header = g:quickw_cover_line ? s:qw_pkm.line : ''
-
-  call s:qw_pkm.Load(s:qw_pkm.WordSpaces())
-
-  let line_plus = len(s:qw_pkm.pages) < 2 ? 1 : 2
-  let options = #{
-        \ filtermode: 'n',
-        \ pos: 'botleft',
-        \ line: 'cursor+' . line_plus,
-        \ col: 'cursor-' . (virtcol('.') - 1) ,
-        \ }
-  call s:qw_pkm.Open(options)
+  call s:qw_pkm.InitHoriz()
+  if len(s:qw_pkm.pages) > 0
+    call s:qw_pkm.Open(s:qw_pkm.HorizOpts())
+  else
+    call s:qw_pkm.InitVert()
+    call s:qw_pkm.Open(s:qw_pkm.VertOpts())
+  endif
 
   let s:pkm_id = s:qw_pkm.pkm_id
 endfunc
