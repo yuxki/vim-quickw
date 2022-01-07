@@ -181,8 +181,14 @@ func! s:QuickWordPkm()
       call popup_close(a:winid)
     else
       " vertical
-      let diff = ((len(self.keys) / 2) * -1) + a:index
-      call cursor(line('.') + diff, '.')
+      " diff from current line + number the of current line
+      let col = (((len(self.keys) / 2) * -1) + a:index) + line('.')
+
+      if  col < 0
+        return
+      endif
+
+      call cursor(col, '.')
       call self.ToHorizontal(a:winid)
     endif
   endfunc
