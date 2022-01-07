@@ -1,9 +1,19 @@
+" ============================================================
+" Filename: quickw.vim
+" Author: yuxki
+" License: MIT License
+" Last Change: 2022/01/07
+" ============================================================
+
+let s:save_cpo = &cpo
+set cpo&vim
+
 func! s:KeywordPosList(line)
   let start = 0
   let pos_list = []
 
   while 1
-    let pos = matchstrpos(a:line, '\k\+', start)
+    let pos = matchstrpos(a:line, g:quickw_word_pattern, start)
     if pos[2] < 0
       break
     endif
@@ -13,26 +23,24 @@ func! s:KeywordPosList(line)
   return pos_list
 endfunc
 
-hi QuickWord term=reverse ctermbg=16 guibg=#000000
-hi QuickWordV term=reverse ctermfg=215 guifg=#ffb964 ctermbg=16 guibg=#000000
 let s:pkm_id = ''
-func! s:QuickWord()
+func! quickw#QuickWord()
   if !pkm#Exists(s:pkm_id)
     let s:pkm = pkm#PopupKeyMenu()
-    " origin props
-    let s:pkm.keys = 'abcdefgijkmnopqrstuwyz'
+    let s:pkm.keys = g:quickw_keys
     let s:pkm.max_cols_lines = len(s:pkm.keys)
     let s:pkm.key_guide = "%t%k"
     let s:pkm.ignorecase = 1
     let s:pkm.align = 0
     let s:pkm.item_border = ""
     let s:pkm.page_guides = ["%n>", "<%v %n>", "<%v"]
-    " unique props
+    " extends
     let s:pkm.visual_mode = 0
     let s:pkm.endofword = 0
 
+    " overrides
     func! s:pkm.OnOpen(winid)
-      call setwinvar(a:winid, '&wincolor', 'QuickWord')
+      call setwinvar(a:winid, '&wincolor', g:quickw_color_normal)
     endfunc
 
     func! s:pkm.OnFilter(winid, key) dict
@@ -40,7 +48,7 @@ func! s:QuickWord()
         return -1
       elseif a:key ==# 'v'
         let self.visual_mode = 1
-        call setwinvar(a:winid, '&wincolor', 'QuickWordV')
+        call setwinvar(a:winid, '&wincolor', g:quickw_color_visual)
       endif
 
       if len(a:key) == 1
@@ -84,7 +92,9 @@ func! s:QuickWord()
     let start = pos[1] + 1
   endfor
 
-  let s:pkm.header = line
+  let s:pkm.header = g:quickw_cover_line ? line : ''
+  let s:pkm.keys = g:quickw_keys
+
   call s:pkm.Load(keywords)
   let s:pkm.visual_mode = 0
 
@@ -99,4 +109,5 @@ func! s:QuickWord()
   let s:pkm_id = s:pkm.pkm_id
 endfunc
 
-nmap <silent> W :call <SID>QuickWord()<CR>
+let &cpo = s:save_cpo
+unlet s:save_cpo
