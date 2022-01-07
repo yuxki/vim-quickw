@@ -54,7 +54,7 @@ func! s:QuickWordPkm()
       endif
 
       let end = (pos[1] - 1) >= 0 ? (pos[1] - 1) : 0
-      let space = end > 0 ? ' ' : ''
+      let space = (pos[1] - 1) >= 0 ? ' ' : ''
       let spaces = substitute(self.line[start:end], '[^\t]', space, 'g')
       call add(word_spaces, spaces)
       let start = pos[1] + 1
