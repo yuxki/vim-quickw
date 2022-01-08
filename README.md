@@ -36,3 +36,16 @@ With vim-plug:
 Plug 'yuxki/vim-pkm-api'
 Plug 'yuxki/vim-quickw'
 ```
+
+## Options
+### g:quickw_word_pattern
+The words are mapped to the keys when matched this pattern. 
+
+Default:
+```
+let g:quickw_word_pattern = '\k\+'
+```
+Example to mark the math operators:
+```
+let g:quickw_word_pattern = '[0-9a-zA-Z-_=+]\+'
+```
