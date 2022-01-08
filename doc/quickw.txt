@@ -126,7 +126,7 @@ Variables						*quickw-variables*
 
 g:quickw_word_pattern					*g:quickw_word_pattern*
 
-		The words are mapped to the keys when matched this pattern.
+		The pattern that is used to match the words.
 		(Default \k\+')
 
 		- Example to mark the math operators:  >
@@ -138,9 +138,6 @@ g:quickw_word_keys					*g:quickw_word_keys*
 		The lowercase letters (a-z) are supported.
 		(Default "abcdefgijkmnopqrstuwyz")
 
-		- Example to back to the default:  >
-		let g:quickw_word_keys = 'abcdefgijkmnopqrstuwyz'
-<
 		The following keys are reseved.
 		'v' - toggle between the positioning and the range selection
 		'l' - use the line guide
