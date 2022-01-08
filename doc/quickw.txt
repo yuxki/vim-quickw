@@ -1,0 +1,196 @@
+*quickw.txt*	For Vim version 8.2 	Last change: 2021/12/19
+The "Quick w" postions the cursor at the word in the line quickly.
+
+Version: 1.0
+Author: Yuxki
+    License: MIT License
+Repository: https://github.com/yuxki/vim-quickw
+
+==============================================================================
+    Contents 						*quickw-contents*
+
+Introduction		|quickw-introduction|
+Usage			|quickw-usage|
+  Move Around		|quickw-move-around|
+  Close Popup		|quickw-close-popup|
+  Select Range 		|quickw-select-range|
+  Customize 		|quickw-customize|
+Installation		|quickw-installation|
+Interface		|quickw-interface|
+  Functions		  |quickw-functions|
+  Variables	 	  |quickw-variables|
+
+==============================================================================
+Introduction						*quickw-introduction*
+
+The "Quick w" postions the cursor at the word in the line quickly.
+a    b     c  d        e   f      g  i   j    k  m   n    o
+
+==============================================================================
+Usage							*quickw-usage*
+
+------------------------------------------------------------------------------
+Move Around						*quickw-move-around*
+
+Call |quickw#QuickWord()| to display the popup that guides the word positions.
+>
+ :call quickw#QuickWord()
+>
+Select the key on the popup, the cursor will be positioned to head of the word.
+
+  - The 'c' key
+    Postions the cursor at the word.
+    a        b   c      d  e   f
+                 ^
+
+The Uppercase input positions to last of the word.
+
+  - The 'C' key
+    Postions the cursor at the word.
+    a        b   c      d  e   f
+                      ^
+
+The 'l' key changes to the line selection mode, and displays the line guide
+popup on the cursor colum.
+
+  - The 'l' key
+    let total_r| a|venues = sales + interest_income
+    let total_e| b|penses = cost_of_sold + wages + cost_of_promotion
+    let net_inc| c|me = total_revenues - total_expenses
+                 ^
+
+Select the key on the popup, the cursor will be positioned the line, and the
+word guide popup will be displayed.
+
+  - The 'a' key
+    let total_revenues = sales + interest_income
+    a   b                c       d
+    let net_income = total_revenues - total_expenses
+
+------------------------------------------------------------------------------
+Close Popup						*quickw-close-popup*
+
+The 'x' key closes the popup.
+
+------------------------------------------------------------------------------
+Select Range						*quickw-select-range*
+
+The guide key after the 'v' key input, selects from the cursor to the word in
+visual mode. This works in the line only.
+
+------------------------------------------------------------------------------
+Customize						*quickw-customize*
+
+See |quickw-variables| for the examples of customizing.
+
+==============================================================================
+Installation						*quickw-installation*
+
+vim-quickw requires https://github.com/yuxki/vim-pkm-api .
+With vim-plug:
+>
+ Plug 'yuxki/vim-pkm-api'
+ Plug 'yuxki/vim-quickw'
+<
+==============================================================================
+Interface						*quickw-interface*
+
+------------------------------------------------------------------------------
+Functions						*quickw-functions*
+
+quickw#QuickWord()					*quickw#QuickWord()*
+
+		See the |quickw-usage| and |quickw-variables| on details of
+		main behaviors of this function.
+
+		When the number of matched words is over the number of the
+		keys, the page guide is appeared. The 'L' key is to next page,
+		and the 'H' key is to previous page.
+
+		- When the key are only 'a' and 'b'
+
+		  Postions the cursor at the word.
+		  a        b
+		  L>
+
+		  Postions the cursor at the word.
+		               a      b
+		  <H L>
+
+		  Postions the cursor at the word.
+		                         a   b
+		  <H
+
+------------------------------------------------------------------------------
+Variables						*quickw-variables*
+
+g:quickw_word_pattern					*g:quickw_word_pattern*
+
+		The words are mapped to the keys when matched this pattern.
+		(Default \k\+')
+
+		- Example to mark the math operators:  >
+		let g:quickw_word_pattern = '[0-9a-zA-Z-_=+]\+'
+<
+g:quickw_word_keys					*g:quickw_word_keys*
+
+		The guide keys that is mapped to the words.
+		The lowercase letters (a-z) are supported.
+		(Default "abcdefgijkmnopqrstuwyz")
+
+		- Example to back to the default:  >
+		let g:quickw_word_keys = 'abcdefgijkmnopqrstuwyz'
+<
+		The following keys are reseved.
+		'v' - toggle between the positioning and the range selection
+		'l' - use the line guide
+		      The 'L' key mapped the key to move to next page
+		'h' - The 'H' key mapped the key to move to previous page
+		'x' - close the popup
+		':' - use Vim command-line mode
+
+g:quickw_line_keys					*g:quickw_line_keys*
+
+		The guide keys that is mapped to the lines.
+		The charactors that are determined as the single charactor
+		(e.g. a-z, A-z, 0-9, [, {) are supported.
+		(Default "abcdefgijkmnopqrstuwyz")
+
+		- Example to extend range of the guide:  >
+		let g:quickw_line_keys
+		    \ = 'ABCDEFGIJKMabcdefgijkmnopqrstuwyzNOPQRSTUWYZ'
+<
+		The following keys are reseved for this option.
+		':' - use Vim command-line mode
+		'x' - close the popup
+
+g:quickw_color_normal					*g:quickw_color_normal*
+
+		The main popup color.
+		(Default "QuickWord": same as "Pmenu")
+
+		- Example to use dark theme: >
+		hi MyQuickWord ctermbg=16 guibg=#000000
+		let g:quickw_color_normal = 'MyQuickWord'
+
+g:quickw_color_visual					*g:quickw_color_visual*
+
+		The popup color when selecting range in visual mode.
+		(Default "QuickWordV": text color is orange)
+
+		- Example to use dark theme: >
+		hi MyQuickWordV ctermfg=215 ctermbg=16 guifg=#ffb964 guibg=#000000
+		let g:quickw_color_visual = 'MyQuickWordV'
+
+g:quickw_cover_line					*g:quickw_cover_line*
+
+		When TRUE, the marked line will be coverd by the popup that
+		displays the line.
+		(Default 0)
+
+		This option could be useful, when the guide popup is out of
+		alignment, due to Vim environment. And when there is
+		invisible charactor, like '*', '|' in vim help.
+
+==============================================================================
+ vim:tw=78:ts=8:noet:ft=help:norl:
