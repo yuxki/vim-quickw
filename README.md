@@ -89,7 +89,7 @@ The main popup color.
 Default:
 ```
 hi QuickWord ctermfg=231 ctermbg=240 guifg=#ffffff guibg=#606060
-let g:quickw_color_normal = 'QuickWord' " same as "Pmenu"
+let g:quickw_color_normal = 'QuickWord'
 ```
 Example to use dark theme:
 ```
