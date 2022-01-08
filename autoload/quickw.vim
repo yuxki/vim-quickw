@@ -2,7 +2,7 @@
 " Filename: quickw.vim
 " Author: yuxki
 " License: MIT License
-" Last Change: 2022/01/07
+" Last Change: 2022/01/08
 " ============================================================
 
 let s:save_cpo = &cpo
@@ -69,7 +69,7 @@ func! s:QuickWordPkm()
           \ filtermode: 'n',
           \ pos: 'botleft',
           \ line: 'cursor+' . line_plus,
-          \ col: 'cursor-' . (virtcol('.') - 1) ,
+          \ col: 'cursor-' . (virtcol('.') - 1),
           \ }
     return options
   endfunc
@@ -123,9 +123,14 @@ func! s:QuickWordPkm()
     endfor
     call self.Load(lines)
 
-    let above_capacity = winline() - ((len(self.keys) / 2) + 1)
-    if above_capacity < 0
-      let self.pages[0] = self.pages[0][above_capacity * -1:]
+    " not the popup to be force positioned center, when popup is over winline
+    " winline  key
+    "          a   :top half (keylen / 2) + 1 -> cut it and can be worked
+    " 1        b   :cursor
+    " 2        c   :bot half
+    let top_capacity = winline() - ((len(self.keys) / 2) + 1)
+    if top_capacity < 0
+      let self.pages[0] = self.pages[0][top_capacity * -1:]
     endif
   endfunc
 
