@@ -77,6 +77,7 @@ func! s:QuickWordPkm()
   func! pkm.InitHoriz() dict
     "init
     let self.vertical = 0
+    let self.ignorecase = 1
     let self.line = getline('.')
     let self.positions = s:WordPositions(self.line, g:quickw_word_pattern)
     let self.mode = self.MODE_NORMAL
@@ -84,8 +85,8 @@ func! s:QuickWordPkm()
     " init by global vars
     let self.color_normal = g:quickw_color_normal
     let self.color_visual = g:quickw_color_visual
-    let self.keys = g:quickw_keys
-    let self.max_cols_lines = len(g:quickw_keys)
+    let self.keys = g:quickw_word_keys
+    let self.max_cols_lines = len(g:quickw_word_keys)
     let self.header = g:quickw_cover_line ? self.line : ''
 
     call self.Load(self.WordSpaces())
@@ -115,6 +116,9 @@ func! s:QuickWordPkm()
 
   func! pkm.InitVert() dict
     let self.vertical = 1
+    let self.ignorecase = 0
+    let self.keys = g:quickw_line_keys
+    let self.max_cols_lines = len(self.keys)
     let self.header = ''
 
     let lines = []
@@ -160,8 +164,10 @@ func! s:QuickWordPkm()
         let self.mode = self.MODE_VISUAl
         call setwinvar(a:winid, '&wincolor', self.color_visual)
       endif
+      return 1
     elseif a:key ==# 'l'
       call self.ToVert(a:winid)
+      return 1
     endif
 
     if len(a:key) == 1

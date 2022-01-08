@@ -15,8 +15,13 @@ if !exists('g:quickw_word_pattern')
   let g:quickw_word_pattern = '\k\+'
 endif
 
-if !exists('g:quickw_keys')
-  let g:quickw_keys = 'abcdefgijkmnopqrstuwyz'
+if !exists('g:quickw_word_keys')
+  let g:quickw_word_keys = 'abcdefgijkmnopqrstuwyz'
+endif
+
+if !exists('g:quickw_line_keys')
+  " long 'ABCDEFGIJKMabcdefgijkmnopqrstuwyzNOPQRSTUWYZ'
+  let g:quickw_line_keys = 'abcdefgijkmnopqrstuwyz'
 endif
 
 if !exists('g:quickw_color_normal')
