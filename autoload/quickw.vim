@@ -152,7 +152,7 @@ func! s:QuickWordPkm()
   func! pkm.OnFilter(winid, key) dict
     if a:key == ':'
       return -1
-    elseif a:key ==# 'v'
+    elseif a:key ==# 'v' && !self.vertical
       if self.mode ==# self.MODE_VISUAl
         let self.mode = self.MODE_NORMAL
         call setwinvar(a:winid, '&wincolor', self.color_normal)
