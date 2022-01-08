@@ -8,7 +8,7 @@ let g:loaded_switch_name = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-hi QuickWord ctermfg=231 ctermbg=240 guifg=#ffffff  guibg=#606060
+hi QuickWord ctermfg=231 ctermbg=240 guifg=#ffffff guibg=#606060
 hi QuickWordV ctermfg=215 ctermbg=240 guifg=#ffb964 guibg=#606060
 
 if !exists('g:quickw_word_pattern')
