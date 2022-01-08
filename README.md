@@ -1,3 +1,4 @@
+# Quick w
 ## Introduction
 
 The "Quick w" postions the cursor at the word in the line quickly.
@@ -39,7 +40,7 @@ Plug 'yuxki/vim-quickw'
 
 ## Options
 ### g:quickw_word_pattern
-The words are mapped to the keys when matched this pattern.
+The pattern that is used to match the words.
 
 Default:
 ```
@@ -89,7 +90,7 @@ The main popup color.
 Default:
 ```
 hi QuickWord ctermfg=231 ctermbg=240 guifg=#ffffff guibg=#606060
-let g:quickw_color_normal = 'QuickWord' " same as "Pmenu"
+let g:quickw_color_normal = 'QuickWord'
 ```
 Example to use dark theme:
 ```
