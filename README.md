@@ -40,7 +40,7 @@ Plug 'yuxki/vim-quickw'
 
 ## Options
 ### g:quickw_word_pattern
-The words are mapped to the keys when matched this pattern.
+The pattern that is used to match the words.
 
 Default:
 ```
