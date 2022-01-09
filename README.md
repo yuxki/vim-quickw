@@ -14,9 +14,9 @@ The "Quick w" postions the cursor at the word in the line quickly.
 ## Usage
 
 ### Move Around
-Call ```quickw#QuickWord()``` to display the popup that guides the word positions.
+Run ```Quickw``` to display the popup that guides the word positions.
 ```
-:call quickw#QuickWord()
+:Quickw
 ```
 
 #### Word
@@ -42,12 +42,12 @@ The guide key after the 'v' key input, selects from the cursor to the word in vi
 To use quickly, map calling ```quickw#QuickWord()``` to a key.
 
 For example,  you can add this script to the ".vimrc":
-``` 
+```
 " replace key
-nmap <silent> key :call quickw#QuickWord()<CR>
+nmap <silent> key :Quickw<CR>
 ```
 ## Installation
-vim-quickw requires https://github.com/yuxki/vim-pkm-api. 
+vim-quickw requires https://github.com/yuxki/vim-pkm-api.
 
 With vim-plug:
 ```

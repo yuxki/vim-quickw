@@ -36,5 +36,7 @@ if !exists('g:quickw_cover_line')
   let g:quickw_cover_line = 0
 endif
 
+command! Quickw :call quickw#QuickWord()
+
 let &cpo = s:save_cpo
 unlet s:save_cpo

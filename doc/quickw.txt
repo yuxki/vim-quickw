@@ -17,6 +17,7 @@ Usage			|quickw-usage|
   Customize 		|quickw-customize|
 Installation		|quickw-installation|
 Interface		|quickw-interface|
+  Commands		  |quickw-commands|
   Functions		  |quickw-functions|
   Variables	 	  |quickw-variables|
 
@@ -32,9 +33,9 @@ Usage							*quickw-usage*
 ------------------------------------------------------------------------------
 Move Around						*quickw-move-around*
 
-Call |quickw#QuickWord()| to display the popup that guides the word positions.
+Run |Quickw| to display the popup that guides the word positions.
 >
- :call quickw#QuickWord()
+ :Quickw
 >
 Select the key on the popup, the cursor will be positioned to head of the word.
 
@@ -94,6 +95,14 @@ With vim-plug:
 <
 ==============================================================================
 Interface						*quickw-interface*
+
+------------------------------------------------------------------------------
+Commands						*quickw-commands*
+
+Quickw							*Quickw*
+
+		Call |quickw#QuickWord()|: >
+		command! Quickw :call quickw#QuickWord()
 
 ------------------------------------------------------------------------------
 Functions						*quickw-functions*
