@@ -36,7 +36,5 @@ if !exists('g:quickw_cover_line')
   let g:quickw_cover_line = 0
 endif
 
-nmap <silent> W :call quickw#QuickWord()<CR>
-
 let &cpo = s:save_cpo
 unlet s:save_cpo
