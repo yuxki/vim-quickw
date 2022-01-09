@@ -1,4 +1,10 @@
 # Quick w
+## Contents
+ - [Introduction](#introduction)
+ - [Usage](#usage)
+ - [Installation](#installation)
+ - [Options](#options)
+
 ## Introduction
 
 The "Quick w" postions the cursor at the word in the line quickly.
@@ -8,7 +14,7 @@ The "Quick w" postions the cursor at the word in the line quickly.
 ## Usage
 
 ### Move Around
-Call quickw#QuickWord() to display the popup that guides the word positions.
+Call ```quickw#QuickWord()``` to display the popup that guides the word positions.
 ```
 :call quickw#QuickWord()
 ```
@@ -25,7 +31,7 @@ Select the key on the popup, the cursor will be positioned the line, and the wor
 The 'x' key closes the popup.
 
 ### Select Range
-![Demo3](assets/usage_sel_demo.gif?raw=true)
+![Demo4](assets/usage_sel_demo.gif?raw=true)
 
 The guide key after the 'v' key input, selects from the cursor to the word in visual mode. This works in the line only.
 
