@@ -29,17 +29,25 @@ The 'l' key changes to the line selection mode, and displays the line guide popu
 Select the key on the popup, the cursor will be positioned the line, and the word guide popup will be displayed.
 
 ![Demo3](assets/usage_line_demo.gif?raw=true)
-
+- - - -
 ### Close Popup
 The 'x' key closes the popup.
-
+- - - -
 ### Select Range
 The guide key after the 'v' key input, selects from the cursor to the word in visual mode. This works in the line only.
 
 ![Demo4](assets/usage_sel_demo.gif?raw=true)
+- - - -
+### Use Quickly
+To use quickly, map calling ```quickw#QuickWord()``` to a key.
 
+For example,  you can add this script to the ".vimrc":
+``` 
+" replace key
+nmap <silent> key :call quickw#QuickWord()<CR>
+```
 ## Installation
-vim-quickw requires https://github.com/yuxki/vim-pkm-api.
+vim-quickw requires https://github.com/yuxki/vim-pkm-api. 
 
 With vim-plug:
 ```
