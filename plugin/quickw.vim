@@ -3,7 +3,7 @@ if exists('g:loaded_quickw')
 elseif v:version < 802
   echoerr "This plugin needs Vim 8.2+ functions"
 endif
-let g:loaded_switch_name = 1
+let g:loaded_quickw = 1
 
 let s:save_cpo = &cpo
 set cpo&vim
