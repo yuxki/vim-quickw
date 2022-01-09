@@ -139,3 +139,9 @@ Default:
 let g:quickw_cover_line = 0
 ```
 This option could be useful, when the guide popup is out of alignment, due to Vim environment. And when there is invisible charactor, like '*', '|' in vim help.
+- - - -
+### g:loaded_quickw
+To prevent from loading this plugin, add following script to the ".vimrc":
+```
+let g:loaded_quickw = 1
+```
