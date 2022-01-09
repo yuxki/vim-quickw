@@ -1,4 +1,10 @@
 # Quick w
+## Contents
+ - [Introduction](#introduction)
+ - [Usage](#usage)
+ - [Installation](#installation)
+ - [Options](#options)
+
 ## Introduction
 
 The "Quick w" postions the cursor at the word in the line quickly.
