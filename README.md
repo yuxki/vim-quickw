@@ -18,10 +18,12 @@ Call ```quickw#QuickWord()``` to display the popup that guides the word position
 ```
 :call quickw#QuickWord()
 ```
+#### Word
 ![Demo2](assets/usage_word_demo.gif?raw=true)
 
 Select the key on the popup, the cursor will be positioned to head of the word.
 
+#### Line
 ![Demo3](assets/usage_line_demo.gif?raw=true)
 
 The 'l' key changes to the line selection mode, and displays the line guide popup on the cursor colum.
