@@ -63,9 +63,13 @@ Default:
 ```
 let g:quickw_word_pattern = '\k\+'
 ```
+Example to mark the brackets:
+```
+let g:quickw_word_pattern = '\k\+\|[(){}\[\]]\+'
+```
 Example to mark the math operators:
 ```
-let g:quickw_word_pattern = '[0-9a-zA-Z-_=+]\+'
+let g:quickw_word_pattern = '\k\+\|[-+=%\/]\+'
 ```
 - - - -
 ### g:quickw_word_keys
