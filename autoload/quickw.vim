@@ -2,7 +2,8 @@
 " Filename: quickw.vim
 " Author: yuxki
 " License: MIT License
-" Last Change: 2022/01/08
+" Version: 1.1.0
+" Last Change: 2022/08/24
 " ============================================================
 
 let s:save_cpo = &cpo
@@ -69,7 +70,7 @@ func! s:QuickWordPkm()
           \ filtermode: 'n',
           \ pos: 'botleft',
           \ line: 'cursor+' . line_plus,
-          \ col: 'cursor-' . (virtcol('.') - 1),
+          \ col: getwininfo(win_getid())[0]['textoff'] + 1,
           \ }
     return options
   endfunc
@@ -151,6 +152,7 @@ func! s:QuickWordPkm()
   " overrides
   func! pkm.OnOpen(winid) dict
     call setwinvar(a:winid, '&wincolor', self.color_normal)
+    call win_execute(a:winid, 'setl tabstop='.matchstr(execute('set ts?'), '\d\+$'))
   endfunc
 
   func! pkm.OnFilter(winid, key) dict

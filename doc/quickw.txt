@@ -1,7 +1,7 @@
-*quickw.txt*	For Vim version 8.2 	Last change: 2022/01/09
+*quickw.txt*	For Vim version 8.2 	Last change: 2022/08/24
 The "Quick w" postions the cursor at the word in the line quickly.
 
-Version: 1.0
+Version: 1.1.0
 Author: Yuxki
     License: MIT License
 Repository: https://github.com/yuxki/vim-quickw
