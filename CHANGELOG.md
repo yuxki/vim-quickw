@@ -29,4 +29,4 @@ Bug fix update
 ### Changed
  
 ### Fixed
-- Fix the popup does not reflect the wincol info bug issue [Issue URL](https://github.com/yuxki/vim-quickw/issues/3).
+- Fix the popup does not reflect the wincol info [bug issue](https://github.com/yuxki/vim-quickw/issues/3).
