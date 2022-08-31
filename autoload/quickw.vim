@@ -2,8 +2,8 @@
 " Filename: quickw.vim
 " Author: yuxki
 " License: MIT License
-" Version: 1.1.0
-" Last Change: 2022/08/24
+" Version: 1.1.1
+" Last Change: 2022/08/30
 " ============================================================
 
 let s:save_cpo = &cpo
@@ -66,11 +66,12 @@ func! s:QuickWordPkm()
 
   func! pkm.HorizOpts() dict
     let line_plus = len(self.pages) < 2 ? 1 : 2
+    let wininfo = getwininfo(win_getid())[0]
     let options = #{
           \ filtermode: 'n',
           \ pos: 'botleft',
           \ line: 'cursor+' . line_plus,
-          \ col: getwininfo(win_getid())[0]['textoff'] + 1,
+          \ col: wininfo['textoff'] + wininfo['wincol'],
           \ }
     return options
   endfunc

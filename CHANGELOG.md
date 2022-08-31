@@ -14,7 +14,7 @@ First release.
 ### Fixed
  
 ## [1.1.0] - 2022-08-24
- 
+Specification change update.
 ### Added
  
 ### Changed
@@ -22,3 +22,11 @@ First release.
  
 ### Fixed
  
+## [1.1.1] - 2022-08-30
+Bug fix update
+### Added
+ 
+### Changed
+ 
+### Fixed
+- Fix the popup does not reflect the wincol info bug issue [Issue URL](https://github.com/yuxki/vim-quickw/issues/3).
